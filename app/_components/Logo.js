@@ -1,9 +1,10 @@
+import Image from "next/image"
 import Link from "next/link"
 
 function Logo() {
     return (
         <Link href="/" className="flex items-center gap-4 z-10">
-            <img src="./logo.png" height="60" width="60" alt="The Wild Oasis Logo" />
+            <Image src="/logo.png" quality={100} height="60" width="60" alt="The Wild Oasis Logo" />
             <span className="text-lg font-semibold text-primary-100">
                 The Wild Oasis
             </span>
