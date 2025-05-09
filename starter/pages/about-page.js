@@ -1,17 +1,4 @@
-import Image from "next/image";
-import image1 from "@/public/about-1.jpg";
-import image2 from "@/public/about-2.jpg";
-import { getCabins } from "../_lib/data-service";
-
-export const revalidate = 86400;
-
-export const metadata = {
-  title: "About",
-};
-
-export default async function Page() {
-  const cabins = await getCabins();
-
+export default function Page() {
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
@@ -28,10 +15,10 @@ export default async function Page() {
             and enjoying simple pleasures with family.
           </p>
           <p>
-            Our {cabins.length} luxury cabins provide a cozy base, but the real
-            freedom and peace you&apos;ll find in the surrounding mountains.
-            Wander through lush forests, breathe in the fresh air, and watch the
-            stars twinkle above from the warmth of a campfire or your hot tub.
+            Our 8 luxury cabins provide a cozy base, but the real freedom and
+            peace you&apos;ll find in the surrounding mountains. Wander through
+            lush forests, breathe in the fresh air, and watch the stars twinkle
+            above from the warmth of a campfire or your hot tub.
           </p>
           <p>
             This is where memorable moments are made, surrounded by
@@ -42,21 +29,14 @@ export default async function Page() {
       </div>
 
       <div className="col-span-2">
-        <Image
-          src={image1}
+        <img
+          src="/about-1.jpg"
           alt="Family sitting around a fire pit in front of cabin"
-          placeholder="blur"
-          quality={80}
         />
       </div>
 
-      <div className="relative aspect-square col-span-2">
-        <Image
-          src="/about-2.jpg"
-          fill
-          className="object-cover"
-          alt="Family that manages The Wild Oasis"
-        />
+      <div className="col-span-2">
+        <img src="/about-2.jpg" alt="Family that manages The Wild Oasis" />
       </div>
 
       <div className="col-span-3">
