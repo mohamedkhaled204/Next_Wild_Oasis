@@ -12,6 +12,8 @@ export async function getCabin(id) {
     .eq("id", id)
     .single();
 
+
+
   // For testing
   // await new Promise((res) => setTimeout(res, 2000));
 
@@ -38,10 +40,10 @@ export async function getCabinPrice(id) {
 }
 
 export const getCabins = async function () {
-  const { data, error } = await supabase
-    .from("cabins")
-    .select("id, name, maxCapacity, regularPrice, discount, image")
-    .order("name");
+  const { data, error } = await supabase.from("cabins")
+    .select()
+
+
 
   // For testing
   // await new Promise((res) => setTimeout(res, 2000));
@@ -100,33 +102,37 @@ export async function getBookings(guestId) {
 }
 
 export async function getBookedDatesByCabinId(cabinId) {
-  let today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  today = today.toISOString();
 
-  // Getting all bookings
-  const { data, error } = await supabase
-    .from("bookings")
-    .select("*")
-    .eq("cabinId", cabinId)
-    .or(`startDate.gte.${today},status.eq.checked-in`);
+    let today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    today = today.toISOString();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Bookings could not get loaded");
-  }
+    // Getting all bookings
+    const { data, error } = await supabase
+      .from("bookings")
+      .select("*")
+      .eq("cabinId", cabinId)
+      .or(`startDate.gte.${today},status.eq.checked-in`);
 
-  // Converting to actual dates to be displayed in the date picker
-  const bookedDates = data
-    .map((booking) => {
-      return eachDayOfInterval({
-        start: new Date(booking.startDate),
-        end: new Date(booking.endDate),
-      });
-    })
-    .flat();
+      if(!data) return
 
-  return bookedDates;
+    if (error) {
+      console.error(error);
+      // throw new Error("Bookings could not get loaded");
+    }
+
+    // Converting to actual dates to be displayed in the date picker
+    const bookedDates = data?.map((booking) => {
+        return eachDayOfInterval({
+          start: new Date(booking.startDate),
+          end: new Date(booking.endDate),
+        });
+      })
+      .flat();
+
+    return bookedDates;
+    
+  
 }
 
 export async function getSettings() {
